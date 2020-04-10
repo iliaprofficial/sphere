@@ -58,13 +58,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 	}
 	let sphere = document.getElementById('sphere');
 	let json = await getJson('https://next.json-generator.com/api/json/get/VkbVhzKD_');
-	const linksNumber = document.getElementById('linksNumber').value;
-	const pointsNumber = document.getElementById('pointsNumber').value;
-	for(let i = 0; i < linksNumber; i++){
+	for(let i = 0; i < document.getElementById('linksNumber').value; i++){
 		let obj = json[i];
 		linkCreation(obj.title, obj.link);
 	}
-	for(let i = 0; i < pointsNumber; i++){
+	for(let i = 0; i < document.getElementById('pointsNumber').value; i++){
 		let obj = json[i];
 		pointCreation(obj.filled);
 	}
