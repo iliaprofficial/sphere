@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 		return setInterval(function(){
 			sphere.style.transform = "rotateY(" + angleY + "deg)"; // Rotate sphere
 			points.forEach(function(item){ // Rotate links and points
+				// console.log(window.getComputedStyle(item)["transform"]);
 				let transformation = /^([^ ]*)/g.exec(item.style.transform)[0];
-				item.style.transform = transformation + " rotateY(" + angleY * -1 + "deg)";
+				item.style.transform = `${transformation} rotateY(${angleY * -1}deg)`;
 			})
 			if(angleY == 359) // Update angle
 				angleY = 0;
@@ -23,16 +24,20 @@ document.addEventListener("DOMContentLoaded", async function() {
 			z *= -1;
 		return [x, y, z];
 	}
+	function addElement(obj, bc){
+		let cords = pointCords();
+		obj.style.cssText = 
+		`margin-left: ${cords[0]}px;
+		margin-top: ${cords[1]}px;
+		transform: translateZ(${cords[2]}px);
+		background-color: ${bc};`;
+		sphere.append(obj);
+	}
 	function linkCreation(text, address){ // Add link to the sphere
 		let link = document.createElement('a');
 		link.innerHTML = text;
 		link.setAttribute("href", address);
-		let cords = pointCords();
-		link.style.cssText = 
-		`margin-left: ` + cords[0] + `px;
-		margin-top: ` + cords[1] + `px;
-		transform: translateZ(` + cords[2] + `px);`;
-		sphere.append(link);
+		addElement(link, "fff");
 	}
 	function pointCreation(filled){ // Add point to the sphere
 		let point = document.createElement('div');
@@ -41,12 +46,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 		let bc = "#fff";
 		if(filled)
 			bc = "#000";
-		point.style.cssText = 
-		`margin-left: ` + cords[0] + `px;
-		margin-top: ` + cords[1] + `px;
-		transform: translateZ(` + cords[2] + `px);
-		background-color: ` + bc + `;`;
-		sphere.append(point);
+		addElement(point, bc);
 	}
 	async function getJson(url){ // Get json
 		try {
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async function() {
 	}
 	let sphere = document.getElementById('sphere');
 	let json = await getJson('https://next.json-generator.com/api/json/get/VkbVhzKD_');
-	console.log(json[0].link)
 	for(let i = 0; i < 10; i++){
 		let obj = json[i];
 		linkCreation(obj.title, obj.link);
