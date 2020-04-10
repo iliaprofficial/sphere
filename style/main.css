@@ -1,0 +1,47 @@
+#container {
+	position: relative;
+	margin: 100px auto;
+	width: 270px;
+	height: 270px;
+	perspective: 270px;
+}
+#sphere {
+	width: inherit;
+	height: inherit;
+	transform-style: preserve-3d;
+}
+.slice {
+	position: absolute;
+	border-radius: 50%;
+	perspective: none;
+}
+a {
+	position: absolute;
+	z-index: 1000;
+	transform-style: preserve-3d;
+	text-decoration: none;
+	color: #000;
+	background-color: #fff;
+	font-family: 'Arial';
+	font-size: 10px;
+	padding: 0px 5px;
+	border: 1px solid #000;
+	border-radius: 12px;
+}
+.points {
+	position: absolute;
+	z-index: 1000;
+	transform-style: preserve-3d;
+	border: 1px solid #000;
+	border-radius: 50%;
+	width: 7px;
+	height: 7px;
+}
+#controllbox {
+	position: relative;
+	margin: 100px auto;
+	width: 350px;
+}
+#pointsText, #linksText {
+	display: inline-block;
+}
