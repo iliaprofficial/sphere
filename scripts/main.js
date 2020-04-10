@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function() {
 	function rotate(){ // Rotate sphere, links and points
-		let points = Array.from(document.getElementsByClassName('points')).concat(Array.from(document.getElementsByTagName('a'))); // Unite points and links to one array
 		return setInterval(function(){
 			sphere.style.transform = "rotateY(" + angleY + "deg)"; // Rotate sphere
 			points.forEach(function(item){ // Rotate links and points
@@ -65,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 		pointCreation(obj.filled);
 	}
 	let angleY = 0;
+	let points = Array.from(document.getElementsByClassName('points')).concat(Array.from(document.getElementsByTagName('a'))); // Unite points and links to one array
 	let rotation = rotate();
 	sphere.addEventListener('mouseenter', function () {
 		clearInterval(rotation); // Stop rotation
@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 			let obj = json[i];
 			pointCreation(obj.filled);
 		}
+		points = Array.from(document.getElementsByClassName('points')).concat(Array.from(document.getElementsByTagName('a'))); // Unite points and links to one array
 		rotation = rotate(); // Run rotation
 	});
 });
