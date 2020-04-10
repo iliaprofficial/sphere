@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 				angleY++;
 		}, 40);
 	}
+	function stopRotation(){
+		clearInterval(rotation);
+	}
 	const size = 270; // Size of sphere
 	function pointCords(){ // Generate random x, y, z for points and links
 		let x = Math.floor(Math.random() * (size + 1)); // (x - 135)^2 + (y - 135)^2 + z^2 = 135^2
@@ -55,21 +58,29 @@ document.addEventListener("DOMContentLoaded", async function() {
 	}
 	let sphere = document.getElementById('sphere');
 	let json = await getJson('https://next.json-generator.com/api/json/get/VkbVhzKD_');
-	for(let i = 0; i < 10; i++){
+	const linksNumber = document.getElementById('linksNumber').value;
+	const pointsNumber = document.getElementById('pointsNumber').value;
+	for(let i = 0; i < linksNumber; i++){
 		let obj = json[i];
 		linkCreation(obj.title, obj.link);
 	}
-	for(let i = 0; i < 50; i++){
+	for(let i = 0; i < pointsNumber; i++){
 		let obj = json[i];
 		pointCreation(obj.filled);
 	}
 	let angleY = 0;
-	let points = Array.from(document.getElementsByClassName('points')).concat(Array.from(document.getElementsByTagName('a'))); // Unite points and links to one array
+	let points = [...document.getElementsByClassName('points'), ...document.getElementsByTagName('a')]; // Unite points and links to one array
 	let rotation = rotate();
 	sphere.addEventListener('mouseenter', function () {
-		clearInterval(rotation); // Stop rotation
+		stopRotation() // Stop rotation
 	});
 	sphere.addEventListener('mouseleave', function () {
+		rotation = rotate(); // Run rotation
+	});
+	sphere.addEventListener('touchstart', function () { // For touch screens
+		stopRotation() // Stop rotation
+	});
+	sphere.addEventListener('touchend', function () { // For touch screens
 		rotation = rotate(); // Run rotation
 	});
 	setInterval(function(){ // Update points and links number info
@@ -80,15 +91,15 @@ document.addEventListener("DOMContentLoaded", async function() {
 		clearInterval(rotation); // Stop rotation
 		angleY = 0; // Update angle
 		sphere.innerHTML = ""; // Delete current sphere
-		for(let i = 0; i < linksNumber.value; i++){ // Create new links
+		for(let i = 0; i < document.getElementById('linksNumber').value; i++){ // Create new links
 			let obj = json[i];
 			linkCreation(obj.title, obj.link);
 		}
-		for(let i = 0; i < pointsNumber.value; i++){ // Create new points
+		for(let i = 0; i < document.getElementById('pointsNumber').value; i++){ // Create new points
 			let obj = json[i];
 			pointCreation(obj.filled);
 		}
-		points = Array.from(document.getElementsByClassName('points')).concat(Array.from(document.getElementsByTagName('a'))); // Unite points and links to one array
+		points = [...document.getElementsByClassName('points'), ...document.getElementsByTagName('a')]; // Unite points and links to one array
 		rotation = rotate(); // Run rotation
 	});
 });
