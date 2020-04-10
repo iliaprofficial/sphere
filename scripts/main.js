@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 			return await response.json();
 		} catch (err) {throw err}
 	}
+	
 	let sphere = document.getElementById('sphere');
 	let json = await getJson('https://next.json-generator.com/api/json/get/VkbVhzKD_');
 	for(let i = 0; i < document.getElementById('linksNumber').value; i++){
