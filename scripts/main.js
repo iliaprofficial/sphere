@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 			return await response.json();
 		} catch (err) {throw err}
 	}
-	
+
 	let sphere = document.getElementById('sphere');
 	let json = await getJson('https://next.json-generator.com/api/json/get/VkbVhzKD_');
 	for(let i = 0; i < document.getElementById('linksNumber').value; i++){
@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 		let obj = json[i];
 		pointCreation(obj.filled);
 	}
+
 	let angleY = 0;
 	let points = [...document.getElementsByClassName('points'), ...document.getElementsByTagName('a')]; // Unite points and links to one array
 	let rotation = rotate();
@@ -82,10 +83,12 @@ document.addEventListener("DOMContentLoaded", async function() {
 	sphere.addEventListener('touchend', function () { // For touch screens
 		rotation = rotate(); // Run rotation
 	});
+
 	setInterval(function(){ // Update points and links number info
 		document.getElementById('pointsText').textContent = document.getElementById('pointsNumber').value + "/100";
 		document.getElementById('linksText').textContent = document.getElementById('linksNumber').value + "/100";
 	}, 200);
+	
 	document.getElementById('update').addEventListener('click', function () { // Create new sphere 
 		clearInterval(rotation); // Stop rotation
 		angleY = 0; // Update angle
